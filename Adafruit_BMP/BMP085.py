@@ -147,7 +147,7 @@ class BMP085(object):
         return temp
 
     def read_temperature_f(self):
-        #Gets the compensated temperature in degrees Fahrenheit.
+        """Gets the compensated temperature in degrees Fahrenheit."""
         UT = self.read_raw_temp()
         # Datasheet value for debugging:
         #UT = 27898
