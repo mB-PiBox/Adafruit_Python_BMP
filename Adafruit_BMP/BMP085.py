@@ -146,6 +146,20 @@ class BMP085(object):
         self._logger.debug('Calibrated temperature {0} C'.format(temp))
         return temp
 
+	def read_temperature_f(self):
+        #Gets the compensated temperature in degrees Fahrenheit.
+        UT = self.read_raw_temp()
+        # Datasheet value for debugging:
+        #UT = 27898
+        # Calculations below are taken straight from section 3.5 of the datasheet.
+        X1 = ((UT - self.cal_AC6) * self.cal_AC5) >> 15
+        X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
+        B5 = X1 + X2
+        temp = ((B5 + 8) >> 4) / 10.0
+		ftemp = (temp * 9) / 5.0 + 32
+        self._logger.debug('Calibrated temperature {0} F'.format(ftemp))
+        return ftemp
+
     def read_pressure(self):
         """Gets the compensated pressure in Pascals."""
         UT = self.read_raw_temp()
