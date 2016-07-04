@@ -146,7 +146,7 @@ class BMP085(object):
         self._logger.debug('Calibrated temperature {0} C'.format(temp))
         return temp
 
-	def read_temperature_f(self):
+    def read_temperature_f(self):
         #Gets the compensated temperature in degrees Fahrenheit.
         UT = self.read_raw_temp()
         # Datasheet value for debugging:
@@ -156,7 +156,7 @@ class BMP085(object):
         X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
         B5 = X1 + X2
         temp = ((B5 + 8) >> 4) / 10.0
-		ftemp = (temp * 9) / 5.0 + 32
+	ftemp = (temp * 9) / 5.0 + 32
         self._logger.debug('Calibrated temperature {0} F'.format(ftemp))
         return ftemp
 
